@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Role;
 use Tymon\JWTAuth\Facades\JWTAuth;
+use Illuminate\Support\Facades\DB;
 
 
 class JWTAuthController extends Controller
@@ -70,11 +71,25 @@ class JWTAuthController extends Controller
             return response()->json(['error' => 'Unauthorized'], 401);
         }
 
+         $user = DB::table('users')
+                ->join('role_user', 'users.id', '=', 'role_user.user_id')
+                ->join('roles', 'role_user.user_id', '=', 'roles.id')
+                ->where('users.email', '=',$request->email)
+                ->select(
+                'roles.name AS tipo_de_usuario',
+                'users.name',
+                'last_name',
+                'dni',
+                'celular',
+                'email')
+                ->get();
+                //User::where('email', $request->email)->first()
+                
         return response()->json([
             'success'=>true,
             'message' => 'Successfully',
             'token'=> JWTAuth::attempt($credenciales),
-            'data' => User::where('email', $request->email)->first()
+            'usuario' => $user
         ]);
     }
 

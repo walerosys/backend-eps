@@ -51,7 +51,7 @@ public function registerinsta(Request $request){
                 "status" => 200,
                 "success" => true,
                 "message" => "Registro completado con éxito",
-                "data" => "ssfds"
+                "data" => "ssfd"
             ]);
     }
 }
