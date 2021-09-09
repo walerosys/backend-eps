@@ -40,7 +40,7 @@ class JWTAuthController extends Controller
                     $validator->validated(),
                     ['password' => bcrypt($request->password)]
                 ));
-        $user->roles()->attach(Role::where('name', 'user')->first());
+        $user->roles()->attach(Role::where('name', 'admin')->first());
 
         return response()->json([
             'success'=>true,
