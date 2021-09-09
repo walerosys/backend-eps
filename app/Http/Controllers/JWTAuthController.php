@@ -40,7 +40,7 @@ class JWTAuthController extends Controller
                     $validator->validated(),
                     ['password' => bcrypt($request->password)]
                 ));
-        $user->roles()->attach(Role::where('name', 'user')->first());
+        $user->roles()->attach(Role::where('name', 'admin')->first());
 
         return response()->json([
             'success'=>true,
@@ -70,26 +70,25 @@ class JWTAuthController extends Controller
         if (! $token = auth()->attempt($validator->validated())) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
-
-         $user = DB::table('users')
-                ->join('role_user', 'users.id', '=', 'role_user.user_id')
-                ->join('roles', 'role_user.user_id', '=', 'roles.id')
-                ->where('users.email', '=',$request->email)
-                ->select(
+             $user=   User::where('email', $request->email)->first();
+             $datos= DB::table('users')
+             ->join('role_user', 'users.id', '=', 'role_user.user_id')
+             ->join('roles', 'role_user.role_id', '=', 'roles.id')
+             ->where('users.id', '=',$user->id)
+             ->select(
                 'roles.name AS tipo_de_usuario',
                 'users.name',
                 'last_name',
                 'dni',
                 'celular',
                 'email')
-                ->get();
-                //User::where('email', $request->email)->first()
+             ->get();
                 
         return response()->json([
             'success'=>true,
             'message' => 'Successfully',
             'token'=> JWTAuth::attempt($credenciales),
-            'usuario' => $user
+            'usuario' =>$datos
         ]);
     }
 
