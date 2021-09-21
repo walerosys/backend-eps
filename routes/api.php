@@ -36,11 +36,13 @@ Route::group([
     Route::post('deleteactividad', 'ActividadController@destroy');
     Route::get('showactividadid', 'ActividadController@getActividadId');
     Route::get('allactividad', 'ActividadController@getallactividad');
+    Route::get('buscaractividad', 'ActividadController@buscar');
     //tipo de instalacion
     Route::post('registertipo', 'TipodeinstalacionController@register');
     Route::post('updatetipo', 'TipodeinstalacionController@update');
     Route::post('deletetipo', 'TipodeinstalacionController@destroy');
     Route::get('alltipo', 'TipodeinstalacionController@getalltipo');
+    Route::get('buscartipo', 'TipodeinstalacionController@buscar');
     Route::post('registerinstalacion', 'InstalacionController@registerinsta');
     //instalacion
     
