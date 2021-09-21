@@ -69,4 +69,18 @@ class TipodeinstalacionController extends Controller
         ]);
     }
     }
+    public function buscar(Request $request)
+{
+
+    $nombre = $request->get('search');
+
+    $tipo = Tipodeinstalacion::where('nombre','like',"%$nombre%")->paginate();
+    
+    return response()->json([
+        'status' => 200,
+        'success'=>true,
+        'message'=>'Consulta exitosa',
+        'data'=>$tipo
+    ]);
+}
 }

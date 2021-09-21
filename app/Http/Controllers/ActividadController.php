@@ -81,8 +81,9 @@ public function getActividadId(Request $request) {
     }
     
 }
-public function getallactividad(){
-    $actividad = Actividad::all();
+public function getallactividad(Request $request){
+    $per_page = $request->get('per_page');
+    $actividad =  Actividad::paginate($per_page);
     if($actividad->isEmpty()){
         return response()->json([
             'success'=>false,
@@ -96,5 +97,19 @@ public function getallactividad(){
         'data'=>$actividad
     ]);
 }
+}
+public function buscar(Request $request)
+{
+
+    $nombre = $request->get('search');
+    $per_page = $request->get('per_page');
+    $actividad = Actividad::where('nombre','like',"%$nombre%")->paginate($per_page);
+    
+    return response()->json([
+        'status' => 200,
+        'success'=>true,
+        'message'=>'Consulta exitosa',
+        'data'=>$actividad
+    ]);
 }
 }
