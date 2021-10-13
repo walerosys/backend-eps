@@ -63,7 +63,7 @@ public function update(Request $request){
 }
 
 public function getActividadId(Request $request) {
-    $actividad = Actividad::find($request->id);
+    $actividad = Actividad::find($request->get('id'));
     //$actividad->delete();
     if($actividad){
         return response()->json([
