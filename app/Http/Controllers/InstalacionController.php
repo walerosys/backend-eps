@@ -47,6 +47,24 @@ public function registerinsta(Request $request){
                 $detalle->save();
             }
 
+                        /****************join start******************/
+                        $datos= DB::table('instalacions')
+                        ->join('tipodeinstalacions', 'instalacions.tipo_id', '=', 'tipodeinstalacions.id')
+                        ->join('usuario_del_servicios', 'instalacions.uservicio_id', '=', 'usuario_del_servicios.id')
+                        ->join('users', 'instalacions.user_id', '=', 'users.id')
+                        ->join('instalacions_actividads', 'instalacions.id', '=', 'instalacions_actividads.instalacion_id')
+                        ->join('actividads', 'instalacions_actividads.actividad_id', '=', 'actividads.id')
+                        ->where('instalacions.id', '=',$instal->id)
+                        ->select(
+                           'tipodeinstalacions.nombre',
+                           'instalacions.*',
+                           'usuario_del_servicios.*',
+                           'users.*',
+                           'instalacions_actividads.*',
+                           'actividads.*')
+                        ->get();
+                        /****************join end******************/
+
             return response()->json([
                 "status" => 200,
                 "success" => true,
