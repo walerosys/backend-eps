@@ -81,7 +81,8 @@ class JWTAuthController extends Controller
                 'last_name',
                 'dni',
                 'celular',
-                'email')
+                'email',
+                'users.id')
              ->get();
                 
         return response()->json([
@@ -120,6 +121,7 @@ class JWTAuthController extends Controller
        $updateUser ->last_name = $request->input('last_name');
        $updateUser ->dni = $request->input('dni');
        $updateUser ->celular = $request->input('celular');
+       $updateUser ->email = $request->input('email');
        $updateUser ->save();
         return response()->json([
             'success'=>true,
