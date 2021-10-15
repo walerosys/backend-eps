@@ -45,5 +45,7 @@ Route::group([
     Route::get('buscartipo', 'TipodeinstalacionController@buscar');
     Route::post('registerinstalacion', 'InstalacionController@registerinsta');
     //instalacion
+    //usuario del servicio
+    Route::get('alluservicio', 'UsuarioDelServicioController@getallusservicio');
     
 });
