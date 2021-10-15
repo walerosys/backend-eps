@@ -47,5 +47,6 @@ Route::group([
     //instalacion
     //usuario del servicio
     Route::get('alluservicio', 'UsuarioDelServicioController@getallusservicio');
+    Route::post('registerus', 'UsuarioDelServicioController@register');
     
 });
