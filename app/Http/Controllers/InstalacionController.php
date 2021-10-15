@@ -46,9 +46,8 @@ public function registerinsta(Request $request){
                 $detalle->costo_de_instalacion =$det['costo_de_instalacion'];
                 $detalle->save();
             }
-
                         /****************join start******************/
-                        $datos= DB::table('instalacions')
+                       /* $datos= DB::table('instalacions')
                         ->join('tipodeinstalacions', 'instalacions.tipo_id', '=', 'tipodeinstalacions.id')
                         ->join('usuario_del_servicios', 'instalacions.uservicio_id', '=', 'usuario_del_servicios.id')
                         ->join('users', 'instalacions.user_id', '=', 'users.id')
@@ -62,7 +61,7 @@ public function registerinsta(Request $request){
                            'users.*',
                            'instalacions_actividads.*',
                            'actividads.*')
-                        ->get();
+                        ->get();*/
                         /****************join end******************/
 
             return response()->json([
