@@ -48,7 +48,7 @@ public function registerinsta(Request $request){
             }
             
             $pru=   Instalacion::where('monto_total', $request->monto_total)->first();
-            $datos= DB::table('tipodeinstalacions')
+           /* $datos= DB::table('tipodeinstalacions')
              ->join('instalacions', 'tipodeinstalacions.id', '=', 'instalacions.tipo_id')
              ->join('usuario_del_servicios', 'instalacions.uservicio_id', '=', 'usuario_del_servicios.id')
              ->where('instalacions.id', '=',$pru->id)
@@ -73,11 +73,11 @@ public function registerinsta(Request $request){
                 'direccion',
                 'codigo_catastral',
                 'inscripcion')
-             ->get();
+             ->get();*/
             return response()->json([
                 'success' => true,
                 'message' => 'Registro completado con éxito',
-                'instalacion' => $datos
+                'instalacion' => $pru
             ]);
     }
 }
