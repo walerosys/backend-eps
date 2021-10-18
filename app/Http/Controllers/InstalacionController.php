@@ -48,10 +48,10 @@ public function registerinsta(Request $request){
             }
             
            
-           $datos= DB::table('tipodeinstalacions')
-             ->join('instalacions', 'tipodeinstalacions.id', '=', 'instalacions.tipo_id')
-             ->join('usuario_del_servicios', 'instalacions.uservicio_id', '=', 'usuario_del_servicios.id')
-             ->where('instalacions.id', '=',$instal->id)
+           $datos= DB::table('usuario_del_servicios')
+             ->join('instalacions', 'usuario_del_servicios.id', '=', 'instalacions.uservicio_id')
+             ->join('tipodeinstalacions', 'instalacions.tipo_id', '=', 'tipodeinstalacions.id')
+             ->where('instalacions.id', '=', $instal->id)
              ->select(
                 'codigo',
                 'tipodeinstalacions.nombre AS nombre_tipo')
