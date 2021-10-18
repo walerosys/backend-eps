@@ -46,41 +46,38 @@ public function registerinsta(Request $request){
                 $detalle->costo_de_instalacion =$det['costo_de_instalacion'];
                 $detalle->save();
             }
+            
             $pru=   Instalacion::where('monto_total', $request->monto_total)->first();
-                        /****************join start******************/
-                        $datos= DB::table('tipodeinstalacions')
-                        ->join('instalacions', 'tipodeinstalacions.id', '=', 'instalacions.tipo_id')
-                        ->join('usuario_del_servicios', 'instalacions.uservicio_id', '=', 'usuario_del_servicios.id')
-                        ->where('instalacions.id', '=',$pru->id)
-                        ->select(
-                           'codigo',
-                           'tipodeinstalacions.nombre AS nombre_tipo',
-                           'instalacions.id',
-                           'tipo_id',
-                           'uservicio_id',
-                           'user_id',
-                           'fecha',
-                           'sub_total',
-                           'utilidad',
-                           'igv',
-                           'monto_total',
-                           'usuario_del_servicios.nombre',
-                           'apellidos',
-                           'tipo',
-                           'razon_social',
-                           'ruc',
-                           'dni',
-                           'direccion',
-                           'codigo_catastral',
-                           'inscripcion')
-                        ->get();
-                        /****************join end******************/
-
+            $datos= DB::table('tipodeinstalacions')
+             ->join('instalacions', 'tipodeinstalacions.id', '=', 'instalacions.tipo_id')
+             ->join('usuario_del_servicios', 'instalacions.uservicio_id', '=', 'usuario_del_servicios.id')
+             ->where('instalacions.id', '=',$pru->id)
+             ->select(
+                'codigo',
+                'tipodeinstalacions.nombre AS nombre_tipo',
+                'instalacions.id',
+                'tipo_id',
+                'uservicio_id',
+                'user_id',
+                'fecha',
+                'sub_total',
+                'utilidad',
+                'igv',
+                'monto_total',
+                'usuario_del_servicios.nombre',
+                'apellidos',
+                'tipo',
+                'razon_social',
+                'ruc',
+                'dni',
+                'direccion',
+                'codigo_catastral',
+                'inscripcion')
+             ->get();
             return response()->json([
-                "status" => 200,
-                "success" => true,
-                "message" => "Registro completado con éxito",
-                "data" => $datos
+                'success' => true,
+                'message' => 'Registro completado con éxito',
+                'instalacion' => $datos
             ]);
     }
 }
