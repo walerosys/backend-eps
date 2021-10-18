@@ -46,11 +46,12 @@ public function registerinsta(Request $request){
                 $detalle->costo_de_instalacion =$det['costo_de_instalacion'];
                 $detalle->save();
             }
+            $pru=   Instalacion::where('monto_total', $request->monto_total)->first();
                         /****************join start******************/
                         $datos= DB::table('tipodeinstalacions')
                         ->join('instalacions', 'tipodeinstalacions.id', '=', 'instalacions.tipo_id')
                         ->join('usuario_del_servicios', 'instalacions.uservicio_id', '=', 'usuario_del_servicios.id')
-                        ->where('instalacions.id', '=',$instal->id)
+                        ->where('instalacions.id', '=',$pru->id)
                         ->select(
                            'codigo',
                            'tipodeinstalacions.nombre AS nombre_tipo',
