@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Instalacion;
 use App\Instalaciondetalle;
 use Illuminate\Http\Request;
-//use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\DB;
 
 class InstalacionController extends Controller
 {
@@ -46,25 +46,32 @@ public function registerinsta(Request $request){
                 $detalle->costo_de_instalacion =$det['costo_de_instalacion'];
                 $detalle->save();
             }
-            
-           /*
-           $datos= DB::table('usuario_del_servicios')
-             ->join('instalacions', 'usuario_del_servicios.id', '=', 'instalacions.uservicio_id')
-             ->join('tipodeinstalacions', 'instalacions.tipo_id', '=', 'tipodeinstalacions.id')
-             ->where('instalacions.id', '=', $instal->id)
-             ->select(
-                'codigo',
-                'tipodeinstalacions.nombre AS nombre_tipo')
-             ->get();*/
-             $datos= DB::table('instalacions')
-             ->join('tipodeinstalacions', 'tipodeinstalacions.id', '=', 'instalacions.tipo_id')
-             ->join('usuario_del_servicios', 'usuario_del_servicios.id', '=', 'instalacions.uservicio_id')
-             ->where('instalacions.id', '=', $instal->id)
-             ->select(
-                'codigo',
-                'tipodeinstalacions.nombre AS nombre_tipo')
-             ->get();
-
+            $datos= DB::table('tipodeinstalacions')
+            ->join('instalacions', 'tipodeinstalacions.id', '=', 'instalacions.tipo_id')
+            ->join('usuario_del_servicios', 'instalacions.uservicio_id', '=', 'usuario_del_servicios.id')
+            ->where('instalacions.id', '=', $instal->id)
+            ->select(
+               'codigo',
+               'tipodeinstalacions.nombre AS nombre_tipo',
+               'instalacions.id',
+               'tipo_id',
+               'uservicio_id',
+               'user_id',
+               'fecha',
+               'sub_total',
+               'utilidad',
+               'igv',
+               'monto_total',
+               'usuario_del_servicios.nombre',
+               'apellidos',
+               'tipo',
+               'razon_social',
+               'ruc',
+               'dni',
+               'direccion',
+               'codigo_catastral',
+               'inscripcion')
+            ->get();
             return response()->json([
                 'success' => true,
                 'message' => 'Registro completado con éxito',
