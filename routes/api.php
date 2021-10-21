@@ -48,6 +48,7 @@ Route::group([
     //instalacion
     Route::post('registerinstalacion', 'InstalacionController@registerinsta');
     Route::get('allinstalacion', 'InstalacionController@getInstalacion');
+    Route::get('buscarinstal', 'InstalacionController@buscar');
     //usuario del servicio
     Route::get('alluservicio', 'UsuarioDelServicioController@getallusservicio');
     Route::post('registerus', 'UsuarioDelServicioController@register');

@@ -78,4 +78,93 @@ public function registerinsta(Request $request){
                 'instalacion' => $datos
             ]);
     }
+
+    public function getInstalacion(Request $request){
+        $per_page = $request->get('per_page');
+        $datos= DB::table('tipodeinstalacions')
+             ->join('instalacions', 'tipodeinstalacions.id', '=', 'instalacions.tipo_id')
+             ->join('usuario_del_servicios', 'instalacions.uservicio_id', '=', 'usuario_del_servicios.id')
+             ->select(
+                'codigo',
+                'tipodeinstalacions.nombre AS nombre_tipo',
+                'instalacions.id',
+                'tipo_id',
+                'uservicio_id',
+                'user_id',
+                'fecha',
+                'sub_total',
+                'utilidad',
+                'igv',
+                'monto_total',
+                'usuario_del_servicios.nombre',
+                'apellidos',
+                'tipo',
+                'razon_social',
+                'ruc',
+                'dni',
+                'direccion',
+                'codigo_catastral',
+                'inscripcion')
+             ->paginate($per_page);
+
+             if($datos->isEmpty()){
+                return response()->json([
+                    'success'=>false,
+                    'message'=>'No se encontró ningún registro',
+                ]);
+            }else{
+            return response()->json([
+                'status' => 200,
+                'success'=>true,
+                'message'=>'Consulta exitosa',
+                'data'=>$datos
+            ]);
+        }
+
+    }
+    public function buscar(Request $request){
+
+    $dni = $request->get('search');
+    $per_page = $request->get('per_page');
+        $datos= DB::table('tipodeinstalacions')
+             ->join('instalacions', 'tipodeinstalacions.id', '=', 'instalacions.tipo_id')
+             ->join('usuario_del_servicios', 'instalacions.uservicio_id', '=', 'usuario_del_servicios.id')
+             ->where('dni','like',"%$dni%")
+             ->select(
+                'codigo',
+                'tipodeinstalacions.nombre AS nombre_tipo',
+                'instalacions.id',
+                'tipo_id',
+                'uservicio_id',
+                'user_id',
+                'fecha',
+                'sub_total',
+                'utilidad',
+                'igv',
+                'monto_total',
+                'usuario_del_servicios.nombre',
+                'apellidos',
+                'tipo',
+                'razon_social',
+                'ruc',
+                'dni',
+                'direccion',
+                'codigo_catastral',
+                'inscripcion')
+             ->paginate($per_page);
+
+             if($datos->isEmpty()){
+                return response()->json([
+                    'success'=>false,
+                    'message'=>'No se encontró ningún registro',
+                ]);
+            }else{
+            return response()->json([
+                'status' => 200,
+                'success'=>true,
+                'message'=>'Consulta exitosa',
+                'data'=>$datos
+            ]);
+        }
+}
 }
