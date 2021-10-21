@@ -31,6 +31,7 @@ Route::group([
     Route::get('profile', 'JWTAuthController@profile');
     Route::post('update', 'JWTAuthController@update');
     Route::get('allusuario', 'JWTAuthController@getallusuario');
+    Route::post('deleteusuario', 'JWTAuthController@destroy');
     //actividad
     Route::post('registeractividad', 'ActividadController@register');
     Route::post('updateactividad', 'ActividadController@update');
@@ -44,8 +45,9 @@ Route::group([
     Route::post('deletetipo', 'TipodeinstalacionController@destroy');
     Route::get('alltipo', 'TipodeinstalacionController@getalltipo');
     Route::get('buscartipo', 'TipodeinstalacionController@buscar');
-    Route::post('registerinstalacion', 'InstalacionController@registerinsta');
     //instalacion
+    Route::post('registerinstalacion', 'InstalacionController@registerinsta');
+    Route::get('allinstalacion', 'InstalacionController@getInstalacion');
     //usuario del servicio
     Route::get('alluservicio', 'UsuarioDelServicioController@getallusservicio');
     Route::post('registerus', 'UsuarioDelServicioController@register');

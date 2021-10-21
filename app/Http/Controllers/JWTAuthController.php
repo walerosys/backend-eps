@@ -162,4 +162,16 @@ class JWTAuthController extends Controller
          ]);
      }
       }
+      
+      public function destroy(Request $request) {
+        // $actividad = Actividad::find($request->get('id'));
+         $usuario = User::find($request->id);
+         DB::table('role_user')->where('user_id', '=',$usuario->id)->delete();
+         $usuario->delete();
+         return response()->json([
+             'status' => 200,
+             'success'=>true,
+             'message'=>'El usuario fue eliminado con éxito',
+         ]);
+     }
 }
