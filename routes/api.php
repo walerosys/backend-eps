@@ -30,6 +30,7 @@ Route::group([
     Route::post('refresh', 'JWTAuthController@refresh');
     Route::get('profile', 'JWTAuthController@profile');
     Route::post('update', 'JWTAuthController@update');
+    Route::get('allusuario', 'JWTAuthController@getallusuario');
     //actividad
     Route::post('registeractividad', 'ActividadController@register');
     Route::post('updateactividad', 'ActividadController@update');

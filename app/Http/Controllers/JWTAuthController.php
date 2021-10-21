@@ -32,6 +32,7 @@ class JWTAuthController extends Controller
             'last_name' => 'required|string',
             'dni' => 'required|unique:users|max:8',
             'celular' => 'required|string',
+            'tipo_usuario' => 'required|string',
             'email' => 'required|email|unique:users|max:50',
             'password' => 'required|confirmed|string|min:6',
         ]);
@@ -116,12 +117,14 @@ class JWTAuthController extends Controller
     }
 
     public function update(Request $request){
-       $updateUser = User::find($request->id); 
+       $updateUser = User::find($request->id);
+       DB::table('role_user')->where('user_id', '=',$updateUser->id)->delete();
        $updateUser ->name = $request->input('name');
        $updateUser ->last_name = $request->input('last_name');
        $updateUser ->dni = $request->input('dni');
        $updateUser ->celular = $request->input('celular');
-       $updateUser ->email = $request->input('email');
+      // $updateUser ->email = $request->input('email');
+      $updateUser->roles()->attach(Role::where('name', $request->input('tipo_usuario'))->first());
        $updateUser ->save();
         return response()->json([
             'success'=>true,
@@ -129,4 +132,34 @@ class JWTAuthController extends Controller
             'data'=> $updateUser
         ]);
     }
+
+    public function getallusuario(){
+        // $usuarios = User::all();
+         $usuarios= DB::table('users')
+         ->join('role_user', 'users.id', '=', 'role_user.user_id')
+         ->join('roles', 'role_user.role_id', '=', 'roles.id')
+         ->select(
+            'roles.name AS tipo_de_usuario',
+            'users.name',
+            'last_name',
+            'dni',
+            'celular',
+            'email',
+            'users.id',
+            'password')
+         ->get();
+         if($usuarios->isEmpty()){
+             return response()->json([
+                 'success'=>false,
+                 'message'=>'No se encontró ningún registro',
+             ]);
+         }else{
+         return response()->json([
+             'status' => 200,
+             'success'=>true,
+             'message'=>'Consulta exitosa',
+             'data'=>$usuarios
+         ]);
+     }
+      }
 }
