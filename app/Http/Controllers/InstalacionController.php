@@ -84,6 +84,7 @@ public function registerinsta(Request $request){
         $datos= DB::table('tipodeinstalacions')
              ->join('instalacions', 'tipodeinstalacions.id', '=', 'instalacions.tipo_id')
              ->join('usuario_del_servicios', 'instalacions.uservicio_id', '=', 'usuario_del_servicios.id')
+             ->orderBy('instalacions.id', 'desc')
              ->select(
                 'codigo',
                 'tipodeinstalacions.nombre AS nombre_tipo',
@@ -130,6 +131,7 @@ public function registerinsta(Request $request){
              ->join('instalacions', 'tipodeinstalacions.id', '=', 'instalacions.tipo_id')
              ->join('usuario_del_servicios', 'instalacions.uservicio_id', '=', 'usuario_del_servicios.id')
              ->where('dni','like',"%$dni%")
+             ->orderBy('instalacions.id', 'desc')
              ->select(
                 'codigo',
                 'tipodeinstalacions.nombre AS nombre_tipo',
